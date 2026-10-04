@@ -50,9 +50,9 @@ public final class SchematicLoader {
             data = NbtUtil.bytes(s, "BlockData");
         }
         int max = 0;
-        for (String k : palC.keySet()) max = Math.max(max, NbtUtil.i(palC, k));
+        for (String k : palC.getKeys()) max = Math.max(max, NbtUtil.i(palC, k));
         BlockState[] pal = new BlockState[max + 1];
-        for (String k : palC.keySet()) pal[NbtUtil.i(palC, k)] = parseState(k);
+        for (String k : palC.getKeys()) pal[NbtUtil.i(palC, k)] = parseState(k);
 
         Schematic out = new Schematic();
         out.sizeX = w; out.sizeY = h; out.sizeZ = l;
@@ -75,7 +75,7 @@ public final class SchematicLoader {
         int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE, maxZ = Integer.MIN_VALUE;
 
-        for (String key : regions.keySet()) {
+        for (String key : regions.getKeys()) {
             NbtCompound r = NbtUtil.compound(regions, key);
             NbtCompound pos = NbtUtil.compound(r, "Position"), size = NbtUtil.compound(r, "Size");
             int px = NbtUtil.i(pos, "x"), py = NbtUtil.i(pos, "y"), pz = NbtUtil.i(pos, "z");
@@ -145,7 +145,7 @@ public final class SchematicLoader {
 
     private static BlockState stateFrom(String name, NbtCompound props) {
         BlockState st = block(name).getDefaultState();
-        for (String k : props.keySet()) st = apply(st, k, NbtUtil.str(props, k));
+        for (String k : props.getKeys()) st = apply(st, k, NbtUtil.str(props, k));
         return st;
     }
 
